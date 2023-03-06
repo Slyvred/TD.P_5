@@ -26,5 +26,13 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
+    vector<string> nomVilles;
+    vector<vector<int>> matriceDistance;
+    int nbVilles;
+
+
+
+
+
     return EXIT_SUCCESS;
 }
