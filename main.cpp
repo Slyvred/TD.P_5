@@ -14,7 +14,7 @@ int main(int argc, char** argv)
     // Mauvais paramètres de lancement
     if (argc != 3)
     {
-        cerr << "format incorrect ./TP5 fichier_colis.txt fichier_villes.txt" << endl;
+        cerr << "Format incorrect ./TP5 fichier_colis.txt fichier_villes.txt" << endl;
         return EXIT_FAILURE;
     }
 
