@@ -40,5 +40,7 @@ int main(int argc, char** argv)
 
     auto colisObj = readColis(pathColis);
 
+    cout << colisObj << endl;
+
     return EXIT_SUCCESS;
 }

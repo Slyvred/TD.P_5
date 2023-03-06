@@ -23,13 +23,13 @@ colis readColis(string path)
     {
         if (file.is_open())
         {
+            cout << "FICHIER OUVERT" << endl;
             string buff;
 
             // Buff contient une ligne du fichier
             while(getline(file, buff))
             {
                 auto str = split(buff, ' ');
-
                 objet tmpObj;
 
                 // Première ligne du fichier -> capacité et nombre obj
@@ -37,6 +37,7 @@ colis readColis(string path)
                 {
                     tmp.capacite = stoi(str[0]);
                     tmp.nombreObj = stoi(str[1]);
+                    continue;
                 }
                 
                 tmpObj = {stoi(str[0]), stoi(str[1]), stoi(str[2])};
