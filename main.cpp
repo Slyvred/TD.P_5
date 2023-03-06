@@ -7,6 +7,8 @@
 #include <filesystem>
 #include <string>
 
+#include "classes/objets.hpp"
+
 using namespace std;
 
 int main(int argc, char** argv)
@@ -18,8 +20,11 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    // Si les fichiers n'existent pas
-    string pathColis, pathVilles;
+    // On récupère les deux arguments
+    string pathColis = argv[1];
+    string pathVilles = argv[2];
+
+    //Si les fichiers n'existent pas
     if (!filesystem::exists(pathColis) || !filesystem::exists(pathVilles))
     {
         cerr << "Erreur un des fichiers n'existe pas, veuillez vérifier" << endl;
@@ -29,6 +34,9 @@ int main(int argc, char** argv)
     vector<string> nomVilles;
     vector<vector<int>> matriceDistance;
     int nbVilles;
+
+
+
 
 
     return EXIT_SUCCESS;
