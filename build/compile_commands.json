@@ -4,5 +4,11 @@
   "command": "/usr/bin/clang++ -g -std=gnu++20 -o CMakeFiles/TP5.dir/main.cpp.o -c /home/remi/Documents/Notes/ISEN/Algo/TP/TD.P_5/main.cpp",
   "file": "/home/remi/Documents/Notes/ISEN/Algo/TP/TD.P_5/main.cpp",
   "output": "CMakeFiles/TP5.dir/main.cpp.o"
+},
+{
+  "directory": "/home/remi/Documents/Notes/ISEN/Algo/TP/TD.P_5/build",
+  "command": "/usr/bin/clang++ -g -std=gnu++20 -o CMakeFiles/TP5.dir/classes/objets.cpp.o -c /home/remi/Documents/Notes/ISEN/Algo/TP/TD.P_5/classes/objets.cpp",
+  "file": "/home/remi/Documents/Notes/ISEN/Algo/TP/TD.P_5/classes/objets.cpp",
+  "output": "CMakeFiles/TP5.dir/classes/objets.cpp.o"
 }
 ]
