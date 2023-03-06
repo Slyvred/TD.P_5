@@ -31,8 +31,11 @@ int main(int argc, char** argv)
     int nbVilles;
 
 
-
-
-
     return EXIT_SUCCESS;
+}
+
+int get_distance(string villeA, string villeB, vector<string> nomVilles, vector<vector<int>> matriceDistance){
+    auto idVilleA = nomVilles.find(villeA);
+    auto idVilleB = nomVilles.find(villeA);
+
 }
