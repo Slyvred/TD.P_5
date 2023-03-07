@@ -11,6 +11,23 @@
 
 using namespace std;
 
+
+int get_distance(string villeA, string villeB, vector<string> nomVilles, vector<vector<int>> matriceDistance){
+    int idVilleB, idVilleA;
+
+    auto it = find (nomVilles.begin(), nomVilles.end(), villeA);
+    if (it != nomVilles.end()){
+        idVilleA = it - nomVilles.begin();
+    }
+
+    it = find (nomVilles.begin(), nomVilles.end(), villeB);
+    if (it != nomVilles.end()){
+        idVilleB = it - nomVilles.begin();
+    }
+
+    return matriceDistance[idVilleA][idVilleB];
+}
+
 int main(int argc, char** argv)
 {
     // Mauvais paramètres de lancement
@@ -31,19 +48,5 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    vector<string> nomVilles;
-    vector<vector<int>> matriceDistance;
-    int nbVilles;
-
-
-
-
-
     return EXIT_SUCCESS;
-}
-
-int get_distance(string villeA, string villeB, vector<string> nomVilles, vector<vector<int>> matriceDistance){
-    auto idVilleA = nomVilles.find(villeA);
-    auto idVilleB = nomVilles.find(villeA);
-
 }
