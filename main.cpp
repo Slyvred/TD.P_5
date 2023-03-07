@@ -48,5 +48,13 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
+
+    Colis colisObj(pathColis);
+    Villes villesObj(pathVilles);
+
+    cout << colisObj << endl;
+    cout << villesObj << endl;
+
+
     return EXIT_SUCCESS;
 }

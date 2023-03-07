@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <iomanip>
 using namespace std;
 
 typedef struct Objet
@@ -10,32 +11,35 @@ typedef struct Objet
     // (pas d'index car on le retrouve dans le vecteur ci-dessous)
     int index, conso, benefice;
 
-    friend ostream& operator<<(ostream& os, struct Objet& obj)
+    friend ostream &operator<<(ostream &os, struct Objet &obj)
     {
         os << "\tIndex: " << obj.index << endl;
         os << "\tConsommation: " << obj.conso << endl;
-        os << "\tBénéfice: " << obj.benefice << endl << endl;
-        
+        os << "\tBénéfice: " << obj.benefice << endl
+           << endl;
+
         return os;
     }
-}objet;
-
-typedef struct Colis
+} objet;
+class Colis
 {
+private:
     int capacite, nombreObj;
     vector<objet> objets;
 
-    friend ostream& operator<<(ostream& os, struct Colis& colis)
-    {
-        os << "Capacité: " << colis.capacite << endl;
-        os << "Nombre d'objets: " << colis.nombreObj << endl;
+public:
+    Colis(const string &path);
+    friend ostream &operator<<(ostream &os, Colis &colis);
+};
 
-        for (auto &obj : colis.objets)
-        {
-            os << obj;
-        }
-        return os;
-    }
-}colis;
+class Villes
+{
+private:
+    vector<string> nomVilles;
+    vector<vector<int>> matriceDistance;
+    int nbVilles;
 
-colis readColis(string path);
+public:
+    Villes(const string &path);
+    friend ostream &operator<<(ostream &os, Villes &villes);
+};
