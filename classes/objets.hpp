@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <iomanip>
 using namespace std;
 
 typedef struct Objet
@@ -38,4 +39,33 @@ typedef struct Colis
     }
 }colis;
 
-colis readColis(string path);
+typedef struct VillesDst
+{
+    vector<string> nomVilles;
+    vector<vector<int>> matriceDistance;
+    int nbVilles;
+
+    friend ostream& operator<<(ostream& os, struct VillesDst& villesDst)
+    {
+        os << "Nombre de villes: " << villesDst.nbVilles << endl;
+        os << "Villes: " << endl;
+
+        for (auto &ville : villesDst.nomVilles)
+        {
+            os << ville << endl;
+        }
+
+        for (auto i = 0; i < villesDst.matriceDistance[0].size(); i++)
+        {
+            for (auto j = 0; j < villesDst.matriceDistance[0].size(); j++)
+            {
+                os << setw(2) << villesDst.matriceDistance[i][j] << " ";
+            }
+            os << endl;
+        }
+        return os;
+    }
+}villesDst;
+
+colis readColis(string& path);
+villesDst readVilles(string& path);

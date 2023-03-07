@@ -31,16 +31,13 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    vector<string> nomVilles;
-    vector<vector<int>> matriceDistance;
-    int nbVilles;
-
-
-
 
     auto colisObj = readColis(pathColis);
+    auto villesObj = readVilles(pathVilles);
 
     cout << colisObj << endl;
+    cout << villesObj << endl;
+
 
     return EXIT_SUCCESS;
 }

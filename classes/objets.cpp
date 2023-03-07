@@ -1,4 +1,5 @@
 #include "objets.hpp"
+#include <algorithm>
 #include <sstream>
 
 vector<string> split(const string &str, char delimiter)
@@ -13,7 +14,7 @@ vector<string> split(const string &str, char delimiter)
     return tokens;
 }
 
-colis readColis(string path)
+colis readColis(string& path)
 {
     ifstream file(path);
 
@@ -23,7 +24,6 @@ colis readColis(string path)
     {
         if (file.is_open())
         {
-            cout << "FICHIER OUVERT" << endl;
             string buff;
 
             // Buff contient une ligne du fichier
@@ -42,6 +42,56 @@ colis readColis(string path)
                 
                 tmpObj = {stoi(str[0]), stoi(str[1]), stoi(str[2])};
                 tmp.objets.push_back(tmpObj);
+            }
+
+            file.close();
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+
+    return tmp;
+}
+
+villesDst readVilles(string& path)
+{
+    villesDst tmp;
+    ifstream file(path);
+
+    try
+    {
+        if (file.is_open())
+        {
+            string buff;
+            int i = 0;
+            // Buff contient une ligne du fichier
+            while(getline(file, buff))
+            {
+                // On le split string en un vector avec ' ' comme séparateur
+                auto str = split(buff, ' ');
+
+                // Première ligne du fichier -> nombre de villes
+                if (str.size() == 1 && str[0].size() == 1)
+                {
+                    tmp.nbVilles = stoi(str[0]);
+                    tmp.matriceDistance.resize(tmp.nbVilles);
+                }
+                else if (str.size() >= tmp.nbVilles) // Matrice
+                {
+                    // On ajoute la ligne
+                    for (auto& it: str)
+                    {
+                        if (it.empty()) continue;
+                        tmp.matriceDistance[i].push_back(stoi(it));
+                    }
+                    i++;
+                }
+                else // Liste de noms
+                {
+                    tmp.nomVilles.push_back(str[0]);
+                }
             }
 
             file.close();
