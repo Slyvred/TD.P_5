@@ -52,11 +52,14 @@ typedef struct VillesDst
 
         for (auto &ville : villesDst.nomVilles)
         {
-            os << ville << endl;
+            os << "\t" << ville << endl;
         }
+
+        os << "Matrice:" << endl;
 
         for (auto i = 0; i < villesDst.matriceDistance[0].size(); i++)
         {
+            os << "\t";
             for (auto j = 0; j < villesDst.matriceDistance[0].size(); j++)
             {
                 os << setw(2) << villesDst.matriceDistance[i][j] << " ";
