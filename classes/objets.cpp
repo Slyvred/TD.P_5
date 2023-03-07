@@ -133,3 +133,22 @@ ostream &operator<<(ostream &os, Villes &villes)
     }
     return os;
 }
+
+int Villes::getDistance(string villeA, string villeB)
+{
+    int idVilleB, idVilleA;
+
+    auto it = find(nomVilles.begin(), nomVilles.end(), villeA);
+    if (it != nomVilles.end())
+    {
+        idVilleA = it - nomVilles.begin();
+    }
+
+    it = find(nomVilles.begin(), nomVilles.end(), villeB);
+    if (it != nomVilles.end())
+    {
+        idVilleB = it - nomVilles.begin();
+    }
+
+    return matriceDistance[idVilleA][idVilleB];
+}

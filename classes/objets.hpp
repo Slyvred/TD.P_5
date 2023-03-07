@@ -42,4 +42,5 @@ private:
 public:
     Villes(const string &path);
     friend ostream &operator<<(ostream &os, Villes &villes);
+    int getDistance(string villeA, string villeB);
 };
