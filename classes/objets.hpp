@@ -11,64 +11,35 @@ typedef struct Objet
     // (pas d'index car on le retrouve dans le vecteur ci-dessous)
     int index, conso, benefice;
 
-    friend ostream& operator<<(ostream& os, struct Objet& obj)
+    friend ostream &operator<<(ostream &os, struct Objet &obj)
     {
         os << "\tIndex: " << obj.index << endl;
         os << "\tConsommation: " << obj.conso << endl;
-        os << "\tBénéfice: " << obj.benefice << endl << endl;
-        
+        os << "\tBénéfice: " << obj.benefice << endl
+           << endl;
+
         return os;
     }
-}objet;
-
-typedef struct Colis
+} objet;
+class Colis
 {
+private:
     int capacite, nombreObj;
     vector<objet> objets;
 
-    friend ostream& operator<<(ostream& os, struct Colis& colis)
-    {
-        os << "Capacité: " << colis.capacite << endl;
-        os << "Nombre d'objets: " << colis.nombreObj << endl;
+public:
+    Colis(const string &path);
+    friend ostream &operator<<(ostream &os, Colis &colis);
+};
 
-        for (auto &obj : colis.objets)
-        {
-            os << obj;
-        }
-        return os;
-    }
-}colis;
-
-typedef struct VillesDst
+class Villes
 {
+private:
     vector<string> nomVilles;
     vector<vector<int>> matriceDistance;
     int nbVilles;
 
-    friend ostream& operator<<(ostream& os, struct VillesDst& villesDst)
-    {
-        os << "Nombre de villes: " << villesDst.nbVilles << endl;
-        os << "Villes: " << endl;
-
-        for (auto &ville : villesDst.nomVilles)
-        {
-            os << "\t" << ville << endl;
-        }
-
-        os << "Matrice:" << endl;
-
-        for (auto i = 0; i < villesDst.matriceDistance[0].size(); i++)
-        {
-            os << "\t";
-            for (auto j = 0; j < villesDst.matriceDistance[0].size(); j++)
-            {
-                os << setw(2) << villesDst.matriceDistance[i][j] << " ";
-            }
-            os << endl;
-        }
-        return os;
-    }
-}villesDst;
-
-colis readColis(string& path);
-villesDst readVilles(string& path);
+public:
+    Villes(const string &path);
+    friend ostream &operator<<(ostream &os, Villes &villes);
+};

@@ -32,8 +32,8 @@ int main(int argc, char** argv)
     }
 
 
-    auto colisObj = readColis(pathColis);
-    auto villesObj = readVilles(pathVilles);
+    Colis colisObj(pathColis);
+    Villes villesObj(pathVilles);
 
     cout << colisObj << endl;
     cout << villesObj << endl;
