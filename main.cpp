@@ -13,6 +13,7 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
+    srand(time(NULL));
     // Mauvais paramètres de lancement
     if (argc != 3)
     {
@@ -36,6 +37,22 @@ int main(int argc, char **argv)
 
     cout << colisObj << endl;
     cout << villesObj << endl;
+
+    cout << "Solution: " << endl;
+    auto sol =  colisObj.getBestShipment();
+    for (auto &elt : sol)
+    {
+        cout << elt << " ";
+    }
+    cout << endl;
+
+    cout << "Solution: " << endl;
+    auto sol2 =  villesObj.getBestPath();
+    for (auto &elt : sol2)
+    {
+        cout << elt << " ";
+    }
+    cout << endl;
 
     return EXIT_SUCCESS;
 }

@@ -5,26 +5,12 @@
 #include <vector>
 #include <map>
 #include <filesystem>
+#include <bits/stdc++.h>
 #include <string>
 
+#include "classes/objets.hpp"
+
 using namespace std;
-
-int get_distance(string villeA, string villeB, vector<string> nomVilles, vector<vector<int>> matriceDistance){
-    int idVilleB, idVilleA;
-
-    auto it = find (nomVilles.begin(), nomVilles.end(), villeA);
-    if (it != nomVilles.end()){
-        idVilleA = it - nomVilles.begin();
-    }
-
-    it = find (nomVilles.begin(), nomVilles.end(), villeB);
-    if (it != nomVilles.end()){
-        idVilleB = it - nomVilles.begin();
-    }
-
-    return matriceDistance[idVilleA][idVilleB];
-}
-
 
 float calcDist(vector<vector<int>> matriceDistance, vector<string> &villes, vector<string> nomVilles)
 {

@@ -38,7 +38,8 @@ Colis::Colis(const string &path)
                     continue;
                 }
 
-                tmpObj = {stoi(str[0]), stoi(str[1]), stoi(str[2])};
+                float ratio = stof(str[2]) / stof(str[1]); // ratio bénéfice/conso
+                tmpObj = {stoi(str[0]), stoi(str[1]), stoi(str[2]), ratio};
                 objets.push_back(tmpObj);
             }
             file.close();
@@ -62,7 +63,7 @@ ostream &operator<<(ostream &os, struct Colis &colis)
     return os;
 }
 
-Villes::Villes(const string& path)
+Villes::Villes(const string &path)
 {
     ifstream file(path);
 
@@ -151,4 +152,67 @@ int Villes::getDistance(string villeA, string villeB)
     }
 
     return matriceDistance[idVilleA][idVilleB];
+}
+
+vector<objet> Colis::getBestShipment()
+{
+    int consoTotale = 0, benefTotal = 0;
+    vector<objet> solution;
+
+    // On trie le vector en fonction du ratio dans l'ordre décroissant
+    sort(objets.begin(), objets.end(), [](objet objA, objet objB)
+         { return objA.ratio > objB.ratio; });
+
+    for (auto &obj : objets)
+    {
+        // Si on ne peut pas le mettre dans le coffre, on passe au suivant
+        if (obj.conso + consoTotale > capacite)
+            continue;
+
+        solution.push_back(obj);
+        consoTotale += obj.conso;
+        benefTotal += obj.benefice;
+    }
+    cout << "Bénéfice: " << benefTotal << endl;
+    cout << "Consommation: " << consoTotale << endl;
+    return solution;
+}
+
+vector<string> Villes::getBestPath()
+{
+    // Point de départ aléatoire
+    string start = nomVilles[rand() % nomVilles.size()];
+
+    // Meilleure distance et ville
+    int bestDist = INT32_MAX, distanceTotale = 0;
+    string bestVille;
+
+    vector<string> solution;
+    solution.push_back(start);
+
+    while (solution.size() != nbVilles)
+    {
+        // On cherche la distance la plus courte pour aller à la ville suivante
+        for (auto &ville : nomVilles)
+        {
+            // Si la ville a déjà été traitée
+            if (find(solution.begin(), solution.end(), ville) != solution.end())
+                continue;
+
+            auto dst = getDistance(start, ville);
+
+            if (dst <= bestDist)
+            {
+                bestDist = dst;
+                bestVille = ville;
+            }
+        }
+        // On ajoute la meilleure ville et on passe à la suivante
+        distanceTotale += getDistance(start, bestVille);
+        solution.push_back(bestVille);
+        start = bestVille;
+        bestDist = INT32_MAX;
+    }
+    cout << "Distance totale: " << distanceTotale << endl;
+    return solution;
 }
