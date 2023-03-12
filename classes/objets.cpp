@@ -181,6 +181,9 @@ vector<objet> Colis::getBestShipment()
             sol = (rand() % 2 == 0) ? obj1 : obj2;
         // Sinon, sol ne change pas et reste obj1
 
+        if (find(solution.begin(), solution.end(), sol) != solution.end())
+            continue;
+
         // On ajoute l'objet sélectionné
         solution.push_back(sol);
         consoTotale += sol.conso;

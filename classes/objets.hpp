@@ -22,6 +22,11 @@ typedef struct Objet
 
         return os;
     }
+
+    bool operator==(struct Objet obj)
+    {
+        return (this->index == obj.index);
+    }
 } objet;
 class Colis
 {
