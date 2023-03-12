@@ -163,16 +163,30 @@ vector<objet> Colis::getBestShipment()
     sort(objets.begin(), objets.end(), [](objet objA, objet objB)
          { return objA.ratio > objB.ratio; });
 
-    for (auto &obj : objets)
+    for (auto it = objets.begin(); it != objets.end() - 1; it++)
     {
-        // Si on ne peut pas le mettre dans le coffre, on passe au suivant
-        if (obj.conso + consoTotale > capacite)
-            continue;
+        auto obj1 = *it;
+        auto obj2 = *(it + 1);
+        auto sol = obj1;
 
-        solution.push_back(obj);
-        consoTotale += obj.conso;
-        benefTotal += obj.benefice;
+        // À optimiser, c'est dégueulasse
+        // Si notre couple de solutions est invalide, on continue
+        if (obj1.conso + consoTotale > capacite && obj2.conso + consoTotale > capacite)
+            continue;
+        // Si l'objet 1 prend trop de place, on sélectionne le deuxième
+        else if (obj1.conso + consoTotale > capacite)
+            sol = obj2;
+        // Si les deux objets vont, on en choisit un aléatoirement
+        else if (obj2.conso + consoTotale <= capacite && obj2.conso + consoTotale <= capacite)
+            sol = (rand() % 2 == 0) ? obj1 : obj2;
+        // Sinon, sol ne change pas et reste obj1
+
+        // On ajoute l'objet sélectionné
+        solution.push_back(sol);
+        consoTotale += sol.conso;
+        benefTotal += sol.benefice;
     }
+
     cout << "Bénéfice: " << benefTotal << endl;
     cout << "Consommation: " << consoTotale << endl;
     return solution;
@@ -180,13 +194,18 @@ vector<objet> Colis::getBestShipment()
 
 vector<string> Villes::getBestPath()
 {
+    int distanceTotale = 0;
+
+    // Contient notre paire de solution
+    string bestVille, oBestVille;
+    int bestDist = 999, oBestDist = 999;
+
+    // Contient la ville et la distance qui vont être ajoutés
+    string solVille;
+    int solDist;
+
     // Point de départ aléatoire
     string start = nomVilles[rand() % nomVilles.size()];
-
-    // Meilleure distance et ville
-    int bestDist = INT32_MAX, distanceTotale = 0;
-    string bestVille;
-
     vector<string> solution;
     solution.push_back(start);
 
@@ -203,15 +222,31 @@ vector<string> Villes::getBestPath()
 
             if (dst <= bestDist)
             {
+                // On conserve la seconde meilleure ville et la seconde meilleure distance
+                oBestVille = bestVille;
+                oBestDist = bestDist;
+
                 bestDist = dst;
                 bestVille = ville;
+
+                // cout << "(" << bestVille << ", " << bestDist << ")\t(" << oBestVille << ", " << oBestDist << ")" << endl;
             }
         }
-        // On ajoute la meilleure ville et on passe à la suivante
-        distanceTotale += getDistance(start, bestVille);
-        solution.push_back(bestVille);
-        start = bestVille;
-        bestDist = INT32_MAX;
+        // Tirage aléatoire parmi les deux meilleurs solutions
+        auto tirage = rand() % 2;
+        solVille = (tirage == 0) ? bestVille : oBestVille;
+        solDist = (tirage == 0) ? bestDist : oBestDist;
+
+        // On vérifie que notre solution est valide
+        if (find(solution.begin(), solution.end(), solVille) != solution.end())
+            continue;
+
+        distanceTotale += getDistance(start, solVille);
+        solution.push_back(solVille);
+
+        // On répète le processus en partant de la ville trouvée
+        start = solVille;
+        bestDist = 999;
     }
     cout << "Distance totale: " << distanceTotale << endl;
     return solution;

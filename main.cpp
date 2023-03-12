@@ -13,17 +13,21 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    srand(time(NULL));
     // Mauvais paramètres de lancement
-    if (argc != 3)
+    if (argc != 4)
     {
-        cerr << "Format incorrect ./TP5 fichier_colis.txt fichier_villes.txt" << endl;
+        cerr << "Format incorrect ./TP5 graine fichier_colis.txt fichier_villes.txt" << endl;
         return EXIT_FAILURE;
     }
 
+    // Seed
+    unsigned int seed = atoi(argv[1]);
+    srand(seed);
+    cout << "Seed: " << seed << endl;
+
     // On récupère les deux arguments
-    string pathColis = argv[1];
-    string pathVilles = argv[2];
+    string pathColis = argv[2];
+    string pathVilles = argv[3];
 
     // Si les fichiers n'existent pas
     if (!filesystem::exists(pathColis) || !filesystem::exists(pathVilles))
