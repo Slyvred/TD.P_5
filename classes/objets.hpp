@@ -28,28 +28,5 @@ typedef struct Objet
         return (this->index == obj.index);
     }
 } objet;
-class Colis
-{
-private:
-    int capacite, nombreObj;
-    vector<objet> objets;
 
-public:
-    Colis(const string &path);
-    vector<objet> getBestShipment();
-    friend ostream &operator<<(ostream &os, Colis &colis);
-};
-
-class Villes
-{
-private:
-    vector<string> nomVilles;
-    vector<vector<int>> matriceDistance;
-    int nbVilles;
-
-public:
-    Villes(const string &path);
-    friend ostream &operator<<(ostream &os, Villes &villes);
-    int getDistance(string villeA, string villeB);
-    vector<string> getBestPath();
-};
+vector<string> split(const string &str, char delimiter);

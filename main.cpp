@@ -8,6 +8,8 @@
 #include <string>
 
 #include "classes/objets.hpp"
+#include "classes/colis.hpp"
+#include "classes/villes.hpp"
 
 using namespace std;
 
