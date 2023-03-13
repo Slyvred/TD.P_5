@@ -1,7 +1,7 @@
 #include "villes.hpp"
 #include <algorithm>
+#include <thread>
 using namespace std;
-
 
 Villes::Villes(const string &path)
 {
@@ -75,32 +75,38 @@ ostream &operator<<(ostream &os, Villes &villes)
     return os;
 }
 
-int Villes::getDistance(string villeA, string villeB)
+int Villes::getDistance(string &villeA, string &villeB)
 {
     int idVilleB, idVilleA;
-
-    auto it = find(nomVilles.begin(), nomVilles.end(), villeA);
-    if (it != nomVilles.end())
+    try
     {
-        idVilleA = it - nomVilles.begin();
+        auto it = find(nomVilles.begin(), nomVilles.end(), villeA);
+        if (it != nomVilles.end())
+        {
+            idVilleA = it - nomVilles.begin();
+        }
+
+        it = find(nomVilles.begin(), nomVilles.end(), villeB);
+        if (it != nomVilles.end())
+        {
+            idVilleB = it - nomVilles.begin();
+        }
     }
-
-    it = find(nomVilles.begin(), nomVilles.end(), villeB);
-    if (it != nomVilles.end())
+    catch (const std::exception &e)
     {
-        idVilleB = it - nomVilles.begin();
+        std::cerr << e.what() << '\n';
     }
 
     return matriceDistance[idVilleA][idVilleB];
 }
 
-vector<string> Villes::getBestPath()
+solVille Villes::getBestPath()
 {
     int distanceTotale = 0;
 
     // Contient notre paire de solution
     string bestVille, oBestVille;
-    int bestDist = 999, oBestDist = 999;
+    int bestDist = INT32_MAX, oBestDist = INT32_MAX;
 
     // Contient la ville et la distance qui vont être ajoutés
     string solVille;
@@ -134,6 +140,10 @@ vector<string> Villes::getBestPath()
                 // cout << "(" << bestVille << ", " << bestDist << ")\t(" << oBestVille << ", " << oBestDist << ")" << endl;
             }
         }
+        // Si une des deux solutions est invalide
+        if (bestVille.empty() || oBestVille.empty())
+            continue;
+
         // Tirage aléatoire parmi les deux meilleurs solutions
         auto tirage = rand() % 2;
         solVille = (tirage == 0) ? bestVille : oBestVille;
@@ -148,8 +158,43 @@ vector<string> Villes::getBestPath()
 
         // On répète le processus en partant de la ville trouvée
         start = solVille;
-        bestDist = 999;
+        bestDist = INT32_MAX;
     }
-    cout << "Distance totale: " << distanceTotale << endl;
+    return {solution, distanceTotale};
+}
+
+int Villes::getTotalDistance(vector<string> &solution)
+{
+    if (solution.empty())
+        return INT32_MAX;
+
+    int dst = 0;
+
+    for (auto it = solution.begin(); it != solution.end() - 1; it++)
+    {
+        dst += getDistance(*it, *(it + 1));
+    }
+    return dst;
+}
+
+solVille Villes::getBestPathRepl(int n)
+{
+    solVille solution;
+
+    for (int i = 0; i < n; i++)
+    {
+        // Si la solution générée est meilleure que la précédente, on la remplace
+        auto tmp = getBestPath();
+        if (tmp.distanceTotale < solution.distanceTotale)
+        {
+            solution.distanceTotale = tmp.distanceTotale;
+            solution.tournee = tmp.tournee;
+        }
+        // cout << "(";
+        // for (auto &it : tmp.tournee)
+        //     cout << it << " ";
+
+        // cout << ", " << tmp.distanceTotale << ")" << endl;
+    }
     return solution;
 }
