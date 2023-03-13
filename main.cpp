@@ -40,25 +40,20 @@ int main(int argc, char **argv)
 
     Colis colisObj(pathColis);
     Villes villesObj(pathVilles);
-
-    cout << colisObj << endl;
-    cout << villesObj << endl;
+    const int nbRepl = 100;
 
     cout << "Solution: " << endl;
-    auto sol =  colisObj.getBestShipment();
-    for (auto &elt : sol)
-    {
-        cout << elt << " ";
-    }
-    cout << endl;
 
-    cout << "Solution: " << endl;
-    auto sol2 =  villesObj.getBestPath();
-    for (auto &elt : sol2)
-    {
-        cout << elt << " ";
-    }
-    cout << endl;
+
+    auto sol = colisObj.getBestShipmentRepl(nbRepl);
+    cout << "(" << sol.benef << ", " << sol.conso << ")" << endl;
+
+    auto sol2 = villesObj.getBestPathRepl(nbRepl);
+    cout << "(";
+    for (auto &it : sol2.tournee)
+        cout << it << " ";
+
+    cout << ", " << sol2.distanceTotale << ")" << endl;
 
     return EXIT_SUCCESS;
 }

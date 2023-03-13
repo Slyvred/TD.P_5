@@ -2,7 +2,6 @@
 #include <algorithm>
 using namespace std;
 
-
 Colis::Colis(const string &path)
 {
     ifstream file(path);
@@ -52,7 +51,7 @@ ostream &operator<<(ostream &os, struct Colis &colis)
     return os;
 }
 
-vector<objet> Colis::getBestShipment()
+solColis Colis::getBestShipment()
 {
     int consoTotale = 0, benefTotal = 0;
     vector<objet> solution;
@@ -75,7 +74,7 @@ vector<objet> Colis::getBestShipment()
         else if (obj1.conso + consoTotale > capacite)
             sol = obj2;
         // Si les deux objets vont, on en choisit un aléatoirement
-        else if (obj2.conso + consoTotale <= capacite && obj2.conso + consoTotale <= capacite)
+        else if (obj2.conso + consoTotale <= capacite && obj1.conso + consoTotale <= capacite)
             sol = (rand() % 2 == 0) ? obj1 : obj2;
         // Sinon, sol ne change pas et reste obj1
 
@@ -87,8 +86,24 @@ vector<objet> Colis::getBestShipment()
         consoTotale += sol.conso;
         benefTotal += sol.benefice;
     }
+    return {solution, benefTotal, consoTotale};
+}
 
-    cout << "Bénéfice: " << benefTotal << endl;
-    cout << "Consommation: " << consoTotale << endl;
-    return solution;
+solColis Colis::getBestShipmentRepl(int n)
+{
+    solColis sol;
+
+    for (int i = 0; i < n; i++)
+    {
+        // Si la solution tmp est meilleure que la solution sol, on remplace sol par tmp
+        solColis tmp = getBestShipment();
+        if (tmp.benef > sol.benef)
+        {
+            sol.benef = tmp.benef;
+            sol.conso = tmp.conso;
+            sol.objets = tmp.objets;
+        }
+        // cout << "(" << sol.benef << ", " << sol.conso << ")" << endl;
+    }
+    return sol;
 }

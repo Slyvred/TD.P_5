@@ -2,6 +2,12 @@
 #include "objets.hpp"
 using namespace std;
 
+typedef struct SolColis
+{
+    vector<objet> objets;
+    int benef = INT32_MIN;
+    int conso = INT32_MAX;
+}solColis;
 
 class Colis
 {
@@ -11,6 +17,7 @@ private:
 
 public:
     Colis(const string &path);
-    vector<objet> getBestShipment();
+    solColis getBestShipment();
+    solColis getBestShipmentRepl(int n); // nombre de réplications
     friend ostream &operator<<(ostream &os, Colis &colis);
 };
