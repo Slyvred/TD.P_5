@@ -10,12 +10,18 @@
 #include "classes/objets.hpp"
 #include "classes/colis.hpp"
 #include "classes/villes.hpp"
+#include "data/generation.h"
 
 using namespace std;
 
 int main(int argc, char **argv)
 {
-    // Mauvais paramètres de lancement
+    genNomsDeVilles(4);
+    return EXIT_SUCCESS;
+}
+
+/*
+     // Mauvais paramètres de lancement
     if (argc != 4)
     {
         cerr << "Format incorrect ./TP5 graine fichier_colis.txt fichier_villes.txt" << endl;
@@ -55,5 +61,4 @@ int main(int argc, char **argv)
 
     cout << ", " << sol2.distanceTotale << ")" << endl;
 
-    return EXIT_SUCCESS;
-}
+ */
