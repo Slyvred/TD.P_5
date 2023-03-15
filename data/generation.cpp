@@ -1,15 +1,18 @@
 #include "generation.h"
 
-void genNomsDeVilles(int nbVille){
+void genVilles(int nbVille, const string& nomFichier)
+{
+    srand(rand() % 100);
+
     std::string tmpVille;
     int nbLettresNomVille = 0;
 
     // On ouvre le fichier txt
-    ofstream myfile;
-    myfile.open("./example.txt");
+    ofstream myfile(nomFichier.c_str());
 
     // On ajoute le nombre de ville dans le fichier
-    if (myfile.is_open()) {
+    if (myfile)
+    {
         myfile << nbVille << endl;
     } else {
         cerr << "Unable to open file." << endl;
@@ -23,7 +26,8 @@ void genNomsDeVilles(int nbVille){
         for (int j = 0; j < nbLettresNomVille; j++)
         {
             // On génénère une lettre majuscule entre A et Z
-            if (j == 0) {
+            if (j == 0)
+            {
                 tmpVille += codeASCIIde_A + rand() % (nbLettresNomVille);
             }
             // On génénère une lettre minuscule entre a et z
@@ -31,15 +35,45 @@ void genNomsDeVilles(int nbVille){
         }
         // On met les noms des villes dans le fichier
 
-        if (myfile.is_open()) {
+        if (myfile)
+        {
             myfile << tmpVille << endl;
         } else {
-            cout << "Unable to open file." << endl;
+            cerr << "Unable to open file." << endl;
         }
 
-        cout << tmpVille;
         // On clear le buffer pour recommencer
         tmpVille.clear();
+    }
+
+    // ecriture de la matrice des coordonnées
+    vector<vector<int>> matriceDistance;
+
+    for (int i = 0; i < nbVille - 1; i++)
+    {
+        for (int j = i + 1; j < nbVille - 1; j++)
+        {
+            if (i == j) matriceDistance[i][j] = 0;
+
+            // On génénère une distance aléatoire
+            int d = 10 + rand() % 100;
+            matriceDistance[i][j] = d;
+            matriceDistance[j][i] = d;
+        }
+    }
+    if (myfile)
+    {
+        for (auto i = 0; i < nbVille - 1; i++)
+        {
+            for (auto j = 0; j < nbVille - 1; j++)
+            {
+                myfile << matriceDistance[i][j] << " ";
+            }
+            myfile << endl;
+        }
+    } else
+    {
+        cerr << "Unable to open file." << endl;
     }
 
     // On ferme le fichier

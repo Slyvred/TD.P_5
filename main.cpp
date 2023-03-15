@@ -16,12 +16,12 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    genNomsDeVilles(4);
+    genVilles(4, R"(C:\Users\Administrateur\CLionProjects\algo\TD.P_5\data\example.txt)");
     return EXIT_SUCCESS;
 }
 
 /*
-     // Mauvais paramètres de lancement
+ *      // Mauvais paramètres de lancement
     if (argc != 4)
     {
         cerr << "Format incorrect ./TP5 graine fichier_colis.txt fichier_villes.txt" << endl;

@@ -11,4 +11,4 @@ using namespace std;
 constexpr int codeASCIIde_a = 97;
 constexpr int codeASCIIde_A = 65;
 
-void genNomsDeVilles(int nbVille);
+void genVilles(int nbVille, const string& nomFichier);
