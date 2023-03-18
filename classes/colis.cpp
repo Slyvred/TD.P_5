@@ -82,22 +82,63 @@ solColis Colis::getBestShipment()
     return {solution, benefTotal, consoTotale};
 }
 
-solColis Colis::getBestShipmentRepl(int n)
+bool isAlpha(string &str)
+{
+    for (auto &chr : str)
+    {
+        if (!isalpha(chr))
+            return false;
+    }
+    return true;
+}
+
+solColis Colis::getBestShipmentRepl(const string &filename)
 {
     solColis sol;
+    ifstream file(filename);
 
-    for (int i = 0; i < n; i++)
+    if (!file.is_open())
+        return sol;
+
+    string buff;
+    while (getline(file, buff))
     {
-        // Si la solution tmp est meilleure que la solution sol, on remplace sol par tmp
-        solColis tmp = getBestShipment();
+        // Découpe
+        auto str = split(buff, ' ');
+        solColis tmp;
+        tmp.benef = stoi(str[1]);
+        tmp.conso = stoi(str[2]);
+
+        // On retire le dernier élément (kilométrage)
+        str.pop_back();
+
+        // On retire les 3 premiers éléments (seed, benef, conso)
+        for (int i = 0; i < 3; i++)
+            str.erase(str.begin());
+
+        // On retire le nom des villes
+        str.erase(remove_if(str.begin(), str.end(), isAlpha), str.end());
+
+        for (auto it = str.begin(); it != str.end(); it += 3)
+        {
+            // On crée un objet temporaire
+            objet tmpObj;
+            tmpObj.index = stoi(*it);
+            tmpObj.conso = stoi(*(it + 1));
+            tmpObj.benefice = stoi(*(it + 2));
+            tmpObj.ratio = (float)tmpObj.benefice / (float)tmpObj.conso;
+            tmp.objets.push_back(tmpObj);
+        }
+
         if (tmp.benef > sol.benef)
         {
             sol.benef = tmp.benef;
             sol.conso = tmp.conso;
             sol.objets = tmp.objets;
         }
-        // cout << "(" << sol.benef << ", " << sol.conso << ")" << endl;
     }
+    file.close();
+
     return sol;
 }
 

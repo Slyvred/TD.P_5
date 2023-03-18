@@ -11,7 +11,7 @@ typedef struct SolVille
 typedef struct Vec2
 {
     int x, y;
-}vec2;
+} vec2;
 
 class Villes
 {
@@ -22,10 +22,11 @@ private:
 
 public:
     Villes(const string &path);
+    Villes() : nbVilles(0){};
     friend ostream &operator<<(ostream &os, Villes &villes);
     int getDistance(string &villeA, string &villeB);
     solVille getBestPath();
     int getTotalDistance(vector<string> &solution);
-    solVille getBestPathRepl(int n); // n notre nombre de réplications
-    void genVilles(int nbVilles, const string& nomFichier);
+    solVille getBestPathRepl(const string &filename);
+    void genVilles(int nbVilles, const string &nomFichier);
 };

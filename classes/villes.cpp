@@ -7,7 +7,7 @@ using namespace std;
 Villes::Villes(const string &path)
 {
     ifstream file(path);
-    
+
     if (file.is_open())
     {
         string buff;
@@ -169,25 +169,49 @@ int Villes::getTotalDistance(vector<string> &solution)
     return dst;
 }
 
-solVille Villes::getBestPathRepl(int n)
+bool isNum(string &str)
 {
+    for (auto &chr : str)
+    {
+        if (!isalpha(chr))
+            return true;
+    }
+    return false;
+}
+
+solVille Villes::getBestPathRepl(const string& filename)
+{
+    // Solution finale
     solVille solution;
 
-    for (int i = 0; i < n; i++)
+    ifstream file(filename);
+
+    if (!file.is_open())
+        return solution;
+
+    string buff;
+    // Buff contient une ligne du fichier
+    while (getline(file, buff))
     {
-        // Si la solution générée est meilleure que la précédente, on la remplace
-        auto tmp = getBestPath();
+        // DÉCOUPE: MOKTAR !!!!!
+        auto str = split(buff, ' ');
+
+        // On crée la solution temporaire
+        solVille tmp;
+
+        tmp.distanceTotale = stoi(str.back());
+        // On garde que le nom des villes
+        str.erase(remove_if(str.begin(), str.end(), isNum), str.end());
+        tmp.tournee = str;
+
+        // Si la solution tmp est meilleure que la notre, on remplace
         if (tmp.distanceTotale < solution.distanceTotale)
         {
             solution.distanceTotale = tmp.distanceTotale;
             solution.tournee = tmp.tournee;
         }
-        // cout << "(";
-        // for (auto &it : tmp.tournee)
-        //     cout << it << " ";
-
-        // cout << ", " << tmp.distanceTotale << ")" << endl;
     }
+    file.close();
     return solution;
 }
 
