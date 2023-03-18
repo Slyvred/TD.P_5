@@ -7,48 +7,41 @@ using namespace std;
 Villes::Villes(const string &path)
 {
     ifstream file(path);
-
-    try
+    
+    if (file.is_open())
     {
-        if (file.is_open())
+        string buff;
+        int i = 0;
+        // Buff contient une ligne du fichier
+        while (getline(file, buff))
         {
-            string buff;
-            int i = 0;
-            // Buff contient une ligne du fichier
-            while (getline(file, buff))
+            // On le split string en un vector avec ' ' comme séparateur
+            auto str = split(buff, ' ');
+
+            // Première ligne du fichier -> nombre de villes
+            if (str.size() == 1 && str[0].size() == 1)
             {
-                // On le split string en un vector avec ' ' comme séparateur
-                auto str = split(buff, ' ');
-
-                // Première ligne du fichier -> nombre de villes
-                if (str.size() == 1 && str[0].size() == 1)
-                {
-                    nbVilles = stoi(str[0]);
-                    matriceDistance.resize(nbVilles);
-                }
-                else if (str.size() >= nbVilles) // Matrice
-                {
-                    // On ajoute la ligne
-                    for (auto &it : str)
-                    {
-                        if (it.empty())
-                            continue;
-                        matriceDistance[i].push_back(stoi(it));
-                    }
-                    i++;
-                }
-                else // Liste de noms
-                {
-                    nomVilles.push_back(str[0]);
-                }
+                nbVilles = stoi(str[0]);
+                matriceDistance.resize(nbVilles);
             }
-
-            file.close();
+            else if (str.size() >= nbVilles) // Matrice
+            {
+                // On ajoute la ligne
+                for (auto &it : str)
+                {
+                    if (it.empty())
+                        continue;
+                    matriceDistance[i].push_back(stoi(it));
+                }
+                i++;
+            }
+            else // Liste de noms
+            {
+                nomVilles.push_back(str[0]);
+            }
         }
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
+
+        file.close();
     }
 }
 
@@ -137,8 +130,6 @@ solVille Villes::getBestPath()
 
                 bestDist = dst;
                 bestVille = ville;
-
-                // cout << "(" << bestVille << ", " << bestDist << ")\t(" << oBestVille << ", " << oBestDist << ")" << endl;
             }
         }
         // Si une des deux solutions est invalide
@@ -234,33 +225,26 @@ void Villes::genVilles(int nbVilles, const string &nomFichier)
 
     ofstream file(nomFichier);
 
-    try
+    if (!file.is_open())
     {
-        if (!file.is_open())
+        string buff;
+
+        buff += to_string(nbVilles) + '\n';
+
+        for (auto &ville : nomVilles)
+            buff += ville + '\n';
+
+        for (auto i = 0; i < matriceDistance[0].size(); i++)
         {
-            string buff;
-
-            buff += to_string(nbVilles) + '\n';
-
-            for (auto &ville : nomVilles)
-                buff += ville + '\n';
-
-            for (auto i = 0; i < matriceDistance[0].size(); i++)
+            for (auto j = 0; j < matriceDistance[0].size(); j++)
             {
-                for (auto j = 0; j < matriceDistance[0].size(); j++)
-                {
-                    buff += to_string(matriceDistance[i][j]) + ' ';
-                }
-                buff += '\n';
+                buff += to_string(matriceDistance[i][j]) + ' ';
             }
-
-            file << buff << endl;
-
-            file.close();
+            buff += '\n';
         }
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
+
+        file << buff << endl;
+
+        file.close();
     }
 }

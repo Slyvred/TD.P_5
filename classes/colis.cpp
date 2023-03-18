@@ -6,36 +6,29 @@ Colis::Colis(const string &path)
 {
     ifstream file(path);
 
-    try
+    if (file.is_open())
     {
-        if (file.is_open())
+        string buff;
+
+        // Buff contient une ligne du fichier
+        while (getline(file, buff))
         {
-            string buff;
+            auto str = split(buff, ' ');
+            objet tmpObj;
 
-            // Buff contient une ligne du fichier
-            while (getline(file, buff))
+            // Première ligne du fichier -> capacité et nombre obj
+            if (str.size() == 2)
             {
-                auto str = split(buff, ' ');
-                objet tmpObj;
-
-                // Première ligne du fichier -> capacité et nombre obj
-                if (str.size() == 2)
-                {
-                    capacite = stoi(str[0]);
-                    nombreObj = stoi(str[1]);
-                    continue;
-                }
-
-                float ratio = stof(str[2]) / stof(str[1]); // ratio bénéfice/conso
-                tmpObj = {stoi(str[0]), stoi(str[1]), stoi(str[2]), ratio};
-                objets.push_back(tmpObj);
+                capacite = stoi(str[0]);
+                nombreObj = stoi(str[1]);
+                continue;
             }
-            file.close();
+
+            float ratio = stof(str[2]) / stof(str[1]); // ratio bénéfice/conso
+            tmpObj = {stoi(str[0]), stoi(str[1]), stoi(str[2]), ratio};
+            objets.push_back(tmpObj);
         }
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
+        file.close();
     }
 }
 
@@ -128,26 +121,19 @@ void Colis::genShipment(int capacite, int nombreObj, const string &filePath)
 
     ofstream file(filePath);
 
-    try
+    if (file.is_open())
     {
-        if (file.is_open())
+        // 1 ere ligne
+        file << capacite << " " << nombreObj << endl;
+
+        // On écrit chaque obj
+        for (auto &obj : objets)
         {
-            // 1 ere ligne
-            file << capacite << " " << nombreObj << endl;
-
-            // On écrit chaque obj
-            for (auto &obj : objets)
-            {
-                file << obj.index << " " << obj.conso << " " << obj.benefice << endl;
-            }
-
-            file.close();
+            file << obj.index << " " << obj.conso << " " << obj.benefice << endl;
         }
 
-        cout << *this << endl;
+        file.close();
     }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
-    }
+
+    cout << *this << endl;
 }
