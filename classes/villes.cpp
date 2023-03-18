@@ -8,42 +8,42 @@ Villes::Villes(const string &path)
 {
     ifstream file(path);
 
-    if (file.is_open())
+    if (!file.is_open())
+        return;
+
+    string buff;
+    int i = 0;
+    // Buff contient une ligne du fichier
+    while (getline(file, buff))
     {
-        string buff;
-        int i = 0;
-        // Buff contient une ligne du fichier
-        while (getline(file, buff))
+        // On le split string en un vector avec ' ' comme séparateur
+        auto str = split(buff, ' ');
+
+        // Première ligne du fichier -> nombre de villes
+        if (str.size() == 1 && str[0].size() == 1)
         {
-            // On le split string en un vector avec ' ' comme séparateur
-            auto str = split(buff, ' ');
-
-            // Première ligne du fichier -> nombre de villes
-            if (str.size() == 1 && str[0].size() == 1)
-            {
-                nbVilles = stoi(str[0]);
-                matriceDistance.resize(nbVilles);
-            }
-            else if (str.size() >= nbVilles) // Matrice
-            {
-                // On ajoute la ligne
-                for (auto &it : str)
-                {
-                    if (it.empty())
-                        continue;
-                    matriceDistance[i].push_back(stoi(it));
-                }
-                i++;
-            }
-            else // Liste de noms
-            {
-                if (nomVilles.size() != nbVilles && !str[0].empty())
-                    nomVilles.push_back(str[0]);
-            }
+            nbVilles = stoi(str[0]);
+            matriceDistance.resize(nbVilles);
         }
-
-        file.close();
+        else if (str.size() >= nbVilles) // Matrice
+        {
+            // On ajoute la ligne
+            for (auto &it : str)
+            {
+                if (it.empty())
+                    continue;
+                matriceDistance[i].push_back(stoi(it));
+            }
+            i++;
+        }
+        else // Liste de noms
+        {
+            if (nomVilles.size() != nbVilles && !str[0].empty())
+                nomVilles.push_back(str[0]);
+        }
     }
+
+    file.close();
 }
 
 ostream &operator<<(ostream &os, Villes &villes)
@@ -77,15 +77,11 @@ int Villes::getDistance(string &villeA, string &villeB)
     {
         auto it = find(nomVilles.begin(), nomVilles.end(), villeA);
         if (it != nomVilles.end())
-        {
             idVilleA = it - nomVilles.begin();
-        }
 
         it = find(nomVilles.begin(), nomVilles.end(), villeB);
         if (it != nomVilles.end())
-        {
             idVilleB = it - nomVilles.begin();
-        }
     }
     catch (const std::exception &e)
     {
@@ -137,7 +133,7 @@ solVille Villes::getBestPath()
         if (bestVille.empty() || oBestVille.empty())
             continue;
 
-        // Tirage aléatoire parmi les deux meilleurs solutions
+        // Tirage aléatoire parmi les deux meilleures solutions
         auto tirage = rand() % 2;
         solVille = (tirage == 0) ? bestVille : oBestVille;
         solDist = (tirage == 0) ? bestDist : oBestDist;
@@ -156,6 +152,7 @@ solVille Villes::getBestPath()
     return {solution, distanceTotale};
 }
 
+// Inutilisée
 int Villes::getTotalDistance(vector<string> &solution)
 {
     if (solution.empty())
@@ -235,16 +232,24 @@ void Villes::genVilles(int nbVilles, const string &nomFichier)
         nomVilles.push_back(tmpVille);
     }
 
-    // On génère la matrice distance aléatoirement
+    // On alloue la mémoire
     matriceDistance.resize(nbVilles);
     for (auto i = 0; i < nbVilles; i++)
-        for (auto j = 0; j < nbVilles; j++)
-            matriceDistance[i].push_back((i == j) ? 0 : rangedRand(10, 50));
+        matriceDistance[i].resize(nbVilles);
 
-    // On la rend symétrique
+    // On remplit la matrice
     for (auto i = 0; i < nbVilles; i++)
-        for (auto j = 0; j <= i; j++)
-            matriceDistance[j][i] = matriceDistance[i][j];
+    {
+        for (auto j = i; j < nbVilles; j++)
+        {
+            if (j == i) matriceDistance[i][i] = 0; // on met la distance de chaque ville à elle-même à 0
+            else
+            {
+                int dist = rangedRand(10, 50);
+                matriceDistance[i][j] = matriceDistance[j][i] = dist;
+            }
+        }
+    }
 
     cout << *this << endl;
 
