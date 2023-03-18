@@ -64,7 +64,7 @@ solColis Colis::getBestShipment()
         if (obj1.conso + consoTotale > capacite && obj2.conso + consoTotale > capacite)
             continue;
         // Si l'objet 1 prend trop de place, on sélectionne le deuxième
-        else if (obj1.conso + consoTotale > capacite)
+        if (obj1.conso + consoTotale > capacite)
             sol = obj2;
         // Si les deux objets vont, on en choisit un aléatoirement
         else if (obj2.conso + consoTotale <= capacite && obj1.conso + consoTotale <= capacite)

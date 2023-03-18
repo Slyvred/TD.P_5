@@ -37,7 +37,8 @@ Villes::Villes(const string &path)
             }
             else // Liste de noms
             {
-                nomVilles.push_back(str[0]);
+                if (nomVilles.size() != nbVilles && !str[0].empty())
+                    nomVilles.push_back(str[0]);
             }
         }
 
