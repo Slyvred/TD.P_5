@@ -6,7 +6,6 @@
 #include <iomanip>
 using namespace std;
 
-
 // Définit nos structures et quelques fonction utiles
 
 typedef struct Objet
@@ -17,10 +16,10 @@ typedef struct Objet
 
     friend ostream &operator<<(ostream &os, struct Objet &obj)
     {
-        os << "Index: " << obj.index << endl;
-        os << "Consommation: " << obj.conso << endl;
-        os << "Bénéfice: " << obj.benefice << endl;
-        os << "Ratio Bénéf/Conso: " << obj.ratio << endl
+        os << "\tIndex: " << obj.index << endl;
+        os << "\tConsommation: " << obj.conso << endl;
+        os << "\tBénéfice: " << obj.benefice << endl;
+        os << "\tRatio Bénéf/Conso: " << obj.ratio << endl
            << endl;
 
         return os;

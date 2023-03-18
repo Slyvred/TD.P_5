@@ -143,6 +143,8 @@ void Colis::genShipment(int capacite, int nombreObj, const string &filePath)
 
             file.close();
         }
+
+        cout << *this << endl;
     }
     catch (const std::exception &e)
     {

@@ -1,4 +1,5 @@
 #include "villes.hpp"
+#include <cmath>
 #include <algorithm>
 #include <thread>
 using namespace std;
@@ -209,7 +210,7 @@ void Villes::genVilles(int nbVilles, const string &nomFichier)
     for (int i = 0; i < nbVilles; i++)
     {
         string tmpVille;
-        int nbLetter = rangedRand(3, 8);
+        int nbLetter = rangedRand(4, 9);
 
         for (int j = 0; j < nbLetter; j++)
         {
@@ -218,18 +219,16 @@ void Villes::genVilles(int nbVilles, const string &nomFichier)
         nomVilles.push_back(tmpVille);
     }
 
-    // Génère la matrice distance, on ne parcourt qu'une moitié car elle est symétrique
+    // On génère la matrice distance aléatoirement
     matriceDistance.resize(nbVilles);
+    for (auto i = 0; i < nbVilles; i++)
+        for (auto j = 0; j < nbVilles; j++)
+            matriceDistance[i].push_back((i == j) ? 0 : rangedRand(10, 50));
 
-    for (auto i = 0; i < matriceDistance[0].size(); i++)
-    {
-        for (auto j = 0; j < i - 1; j++)
-        {
-            cout << "(" << i << "," << j << ")" << endl;
-            // matriceDistance[i].push_back((i == j) ? 0 : rangedRand(10, 50));
-            matriceDistance[i][j] = (i == j) ? 0 : rangedRand(10, 50);
-        }
-    }
+    // On la rend symétrique
+    for (auto i = 0; i < nbVilles; i++)
+        for (auto j = 0; j <= i; j++)
+            matriceDistance[j][i] = matriceDistance[i][j];
 
     cout << *this << endl;
 

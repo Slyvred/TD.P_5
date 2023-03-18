@@ -58,8 +58,8 @@ int main(int argc, char **argv)
 
     cout << ", " << sol2.distanceTotale << ")" << endl;
 
-    // villesObj.genVilles(4, "out.txt");
-    colisObj.genShipment(40, 10, "test.txt");
+    villesObj.genVilles(4, "out.txt");
+    colisObj.genShipment(20, 4, "test.txt");
 
     return EXIT_SUCCESS;
 }

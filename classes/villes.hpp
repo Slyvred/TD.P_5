@@ -8,6 +8,11 @@ typedef struct SolVille
     int distanceTotale = INT32_MAX;
 } solVille;
 
+typedef struct Vec2
+{
+    int x, y;
+}vec2;
+
 class Villes
 {
 private:
