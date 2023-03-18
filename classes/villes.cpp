@@ -179,7 +179,7 @@ bool isNum(string &str)
     return false;
 }
 
-solVille Villes::getBestPathRepl(const string& filename)
+solVille Villes::getBestPathRepl(const string &filename)
 {
     // Solution finale
     solVille solution;
@@ -250,25 +250,25 @@ void Villes::genVilles(int nbVilles, const string &nomFichier)
     ofstream file(nomFichier);
 
     if (!file.is_open())
+        return;
+
+    string buff;
+
+    buff += to_string(nbVilles) + '\n';
+
+    for (auto &ville : nomVilles)
+        buff += ville + '\n';
+
+    for (auto i = 0; i < matriceDistance[0].size(); i++)
     {
-        string buff;
-
-        buff += to_string(nbVilles) + '\n';
-
-        for (auto &ville : nomVilles)
-            buff += ville + '\n';
-
-        for (auto i = 0; i < matriceDistance[0].size(); i++)
+        for (auto j = 0; j < matriceDistance[0].size(); j++)
         {
-            for (auto j = 0; j < matriceDistance[0].size(); j++)
-            {
-                buff += to_string(matriceDistance[i][j]) + ' ';
-            }
-            buff += '\n';
+            buff += to_string(matriceDistance[i][j]) + ' ';
         }
-
-        file << buff << endl;
-
-        file.close();
+        buff += '\n';
     }
+
+    file << buff << endl;
+
+    file.close();
 }
