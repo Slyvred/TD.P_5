@@ -6,6 +6,9 @@
 #include <iomanip>
 using namespace std;
 
+
+// Définit nos structures et quelques fonction utiles
+
 typedef struct Objet
 {
     // (pas d'index car on le retrouve dans le vecteur ci-dessous)
@@ -30,3 +33,5 @@ typedef struct Objet
 } objet;
 
 vector<string> split(const string &str, char delimiter);
+
+int rangedRand(int min, int max);

@@ -19,5 +19,6 @@ public:
     Colis(const string &path);
     solColis getBestShipment();
     solColis getBestShipmentRepl(int n); // nombre de réplications
+    void genShipment(int capacite, int nombreObj, const string& filePath);
     friend ostream &operator<<(ostream &os, Colis &colis);
 };

@@ -22,4 +22,5 @@ public:
     solVille getBestPath();
     int getTotalDistance(vector<string> &solution);
     solVille getBestPathRepl(int n); // n notre nombre de réplications
+    void genVilles(int nbVilles, const string& nomFichier);
 };

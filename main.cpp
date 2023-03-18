@@ -16,12 +16,10 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    genVilles(4, R"(C:\Users\Administrateur\CLionProjects\algo\TD.P_5\data\example.txt)");
-    return EXIT_SUCCESS;
-}
-
-/*
- *      // Mauvais paramètres de lancement
+    //     genVilles(4, R"(C:\Users\Administrateur\CLionProjects\algo\TD.P_5\data\example.txt)");
+    //     return EXIT_SUCCESS;
+    // }
+    // Mauvais paramètres de lancement
     if (argc != 4)
     {
         cerr << "Format incorrect ./TP5 graine fichier_colis.txt fichier_villes.txt" << endl;
@@ -50,7 +48,6 @@ int main(int argc, char **argv)
 
     cout << "Solution: " << endl;
 
-
     auto sol = colisObj.getBestShipmentRepl(nbRepl);
     cout << "(" << sol.benef << ", " << sol.conso << ")" << endl;
 
@@ -61,4 +58,8 @@ int main(int argc, char **argv)
 
     cout << ", " << sol2.distanceTotale << ")" << endl;
 
- */
+    // villesObj.genVilles(4, "out.txt");
+    colisObj.genShipment(40, 10, "test.txt");
+
+    return EXIT_SUCCESS;
+}

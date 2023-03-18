@@ -107,3 +107,45 @@ solColis Colis::getBestShipmentRepl(int n)
     }
     return sol;
 }
+
+void Colis::genShipment(int capacite, int nombreObj, const string &filePath)
+{
+    objet tmpObj;
+
+    objets.clear();
+    this->capacite = capacite;
+    this->nombreObj = nombreObj;
+
+    for (int i = 1; i <= nombreObj; i++)
+    {
+        tmpObj.index = i;
+        tmpObj.benefice = rangedRand(3, 15);
+        tmpObj.conso = rangedRand(1, capacite);
+        tmpObj.ratio = (float)(tmpObj.benefice) / (float)(tmpObj.conso);
+
+        objets.push_back(tmpObj);
+    }
+
+    ofstream file(filePath);
+
+    try
+    {
+        if (file.is_open())
+        {
+            // 1 ere ligne
+            file << capacite << " " << nombreObj << endl;
+
+            // On écrit chaque obj
+            for (auto &obj : objets)
+            {
+                file << obj.index << " " << obj.conso << " " << obj.benefice << endl;
+            }
+
+            file.close();
+        }
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}

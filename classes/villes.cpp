@@ -198,3 +198,70 @@ solVille Villes::getBestPathRepl(int n)
     }
     return solution;
 }
+
+void Villes::genVilles(int nbVilles, const string &nomFichier)
+{
+    this->nbVilles = nbVilles;
+    nomVilles.clear();
+    matriceDistance.clear();
+
+    // Génère ne nombre de villes
+    for (int i = 0; i < nbVilles; i++)
+    {
+        string tmpVille;
+        int nbLetter = rangedRand(3, 8);
+
+        for (int j = 0; j < nbLetter; j++)
+        {
+            tmpVille += (j == 0) ? rangedRand('A', 'Z') : rangedRand('a', 'z');
+        }
+        nomVilles.push_back(tmpVille);
+    }
+
+    // Génère la matrice distance, on ne parcourt qu'une moitié car elle est symétrique
+    matriceDistance.resize(nbVilles);
+
+    for (auto i = 0; i < matriceDistance[0].size(); i++)
+    {
+        for (auto j = 0; j < i - 1; j++)
+        {
+            cout << "(" << i << "," << j << ")" << endl;
+            // matriceDistance[i].push_back((i == j) ? 0 : rangedRand(10, 50));
+            matriceDistance[i][j] = (i == j) ? 0 : rangedRand(10, 50);
+        }
+    }
+
+    cout << *this << endl;
+
+    ofstream file(nomFichier);
+
+    try
+    {
+        if (!file.is_open())
+        {
+            string buff;
+
+            buff += to_string(nbVilles) + '\n';
+
+            for (auto &ville : nomVilles)
+                buff += ville + '\n';
+
+            for (auto i = 0; i < matriceDistance[0].size(); i++)
+            {
+                for (auto j = 0; j < matriceDistance[0].size(); j++)
+                {
+                    buff += to_string(matriceDistance[i][j]) + ' ';
+                }
+                buff += '\n';
+            }
+
+            file << buff << endl;
+
+            file.close();
+        }
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}

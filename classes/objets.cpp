@@ -15,3 +15,8 @@ vector<string> split(const string &str, char delimiter)
     }
     return tokens;
 }
+
+int rangedRand(int min, int max)
+{
+    return (rand() % (max - min + 1)) + min;
+}
