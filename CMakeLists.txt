@@ -5,7 +5,7 @@ include(CTest)
 enable_testing()
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(TP5 main.cpp classes/objets.cpp classes/objets.hpp classes/colis.hpp classes/colis.cpp classes/villes.hpp classes/villes.cpp data/generation.h data/generation.cpp)
+add_executable(TP5 main.cpp classes/objets.cpp classes/objets.hpp classes/colis.hpp classes/colis.cpp classes/villes.hpp classes/villes.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
