@@ -10,7 +10,6 @@
 #include "classes/objets.hpp"
 #include "classes/colis.hpp"
 #include "classes/villes.hpp"
-#include "data/generation.h"
 
 using namespace std;
 
