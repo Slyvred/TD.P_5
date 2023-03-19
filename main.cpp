@@ -20,7 +20,7 @@ int main(int argc, char **argv)
     {
         cerr << "Formats corrects:" << endl;
         cout << "./TP5 graine fichier_colis.txt fichier_villes.txt" << endl;
-        cout << "./TP5 -1 fichier_resultat.txt" << endl;
+        cout << "./TP5 -1 fichier_resultat.txt fichier_villes.txt" << endl;
         cout << "./TP5 -2 capacite nombre_obj p1.txt nombre_villes p2.txt" << endl;
         return EXIT_FAILURE;
     }
