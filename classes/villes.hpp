@@ -23,10 +23,12 @@ private:
 public:
     Villes(const string &path);
     Villes() : nbVilles(0){};
+    int getNbVilles() const;
     friend ostream &operator<<(ostream &os, Villes &villes);
     int getDistance(string &villeA, string &villeB);
     solVille getBestPath();
     int getTotalDistance(vector<string> &solution);
     solVille getBestPathRepl(const string &filename);
     void genVilles(int nbVilles, const string &nomFichier);
+    void getBestPathPermut(int debut, int fin);
 };

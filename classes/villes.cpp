@@ -2,6 +2,7 @@
 #include <cmath>
 #include <algorithm>
 #include <thread>
+#include <bits/stdc++.h>
 using namespace std;
 
 Villes::Villes(const string &path)
@@ -242,7 +243,8 @@ void Villes::genVilles(int nbVilles, const string &nomFichier)
     {
         for (auto j = i; j < nbVilles; j++)
         {
-            if (j == i) matriceDistance[i][i] = 0; // on met la distance de chaque ville à elle-même à 0
+            if (j == i)
+                matriceDistance[i][i] = 0; // on met la distance de chaque ville à elle-même à 0
             else
             {
                 int dist = rangedRand(10, 50);
@@ -278,4 +280,49 @@ void Villes::genVilles(int nbVilles, const string &nomFichier)
     // On écrit qu'une seule fois
     file << buff << endl;
     file.close();
+}
+
+template <typename T>
+ostream &operator<<(ostream &os, vector<T> vec)
+{
+    for (auto &it : vec)
+    {
+        os << it << " ";
+    }
+    return os;
+}
+
+int Villes::getNbVilles() const
+{
+    return nbVilles;
+}
+
+void Villes::getBestPathPermut(int debut, int fin)
+{
+    static int bestDist = INT32_MAX;
+    static vector<string> villes = nomVilles; // Copie des villes;
+
+    if (debut == fin)
+    {
+        int dst = getTotalDistance(villes);
+        if (dst <= bestDist)
+        {
+            bestDist = dst;
+
+            cout << villes << " " << bestDist << endl;
+        }
+    }
+    else
+    {
+        // Permutations made
+        for (int i = debut; i <= fin; i++)
+        {
+            // echange des deux villes
+            swap(villes[debut], villes[i]);
+            // Appel Recursif
+            getBestPathPermut(debut + 1, fin);
+            // On revient à la situation précédente
+            swap(villes[debut], villes[i]);
+        }
+    }
 }

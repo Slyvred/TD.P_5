@@ -28,7 +28,7 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
     // Mode génération meilleure solution
-    else if (argc == 3 && atoi(argv[1]) == -1)
+    else if (argc == 4 && atoi(argv[1]) == -1)
     {
         Colis colisObj;
         Villes villesObj;
@@ -50,6 +50,9 @@ int main(int argc, char **argv)
             cout << it << " ";
         cout << solRep.distanceTotale << endl;
 
+        Villes villesPermut(argv[3]); 
+        villesPermut.getBestPathPermut(0, villesPermut.getNbVilles()-1);
+
         return EXIT_SUCCESS;
     }
     // Mode génération fichiers
@@ -62,7 +65,7 @@ int main(int argc, char **argv)
 
         colisObj.genShipment(atoi(argv[2]), atoi(argv[3]), argv[4]);
         villesObj.genVilles(atoi(argv[5]), argv[6]);
-        
+
         return EXIT_SUCCESS;
     }
 
