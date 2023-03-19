@@ -258,6 +258,7 @@ void Villes::genVilles(int nbVilles, const string &nomFichier)
     if (!file.is_open())
         return;
 
+    // On crée un buffer qui va contenir toute notre classe
     string buff;
 
     buff += to_string(nbVilles) + '\n';
@@ -274,7 +275,7 @@ void Villes::genVilles(int nbVilles, const string &nomFichier)
         buff += '\n';
     }
 
+    // On écrit qu'une seule fois
     file << buff << endl;
-
     file.close();
 }
