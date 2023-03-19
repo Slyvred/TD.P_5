@@ -10,7 +10,6 @@ using namespace std;
 
 typedef struct Objet
 {
-    // (pas d'index car on le retrouve dans le vecteur ci-dessous)
     int index, conso, benefice;
     float ratio; // ratio bénéfice/conso
 
