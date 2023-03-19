@@ -15,9 +15,6 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
-    //     genVilles(4, R"(C:\Users\Administrateur\CLionProjects\algo\TD.P_5\data\example.txt)");
-    //     return EXIT_SUCCESS;
-    // }
     // Mauvais paramètres de lancement
     if (argc != 4 && argc != 3 && argc != 7)
     {
@@ -98,9 +95,6 @@ int main(int argc, char **argv)
     for (auto &it : sol2.tournee)
         cout << it << " ";
     cout << sol2.distanceTotale << endl;
-
-    // villesObj.genVilles(4, "out.txt");
-    // colisObj.genShipment(20, 4, "test.txt");
 
     return EXIT_SUCCESS;
 }
